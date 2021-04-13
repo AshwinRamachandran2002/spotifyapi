@@ -22,7 +22,7 @@ app.set("view engine", "ejs");
 app.set('views', __dirname);
 var client_id = '7a61edb9f8af408ca25d6843f1cca398'; // Your client id
 var client_secret = 'e84fee3e55b34c46b9d3f66a39c7b818'; // Your secret
-var redirect_uri = 'http://localhost:3000/calback'//'https://ashwinsspotify.herokuapp.com/callback'; // Your redirect uri
+var redirect_uri = 'http://localhost:3000/callback'//'https://ashwinsspotify.herokuapp.com/callback'; // Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
@@ -48,12 +48,12 @@ app.use(express.static(__dirname + '/views'))
    .use(cookieParser());
 
 
-
 app.get('/',function(req,res){
-  res.render("views/index.ejs", {name:'a',url:'a'});
+  res.render("views/index.ejs", {name:'a',url:'p'});
+            
 })
 
-app.get('/hi', function(req, res) {
+app.get('/ss', function(req, res) {
 
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
@@ -128,25 +128,30 @@ app.get('/callback', function(req, res) {
             url: `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`,
             headers: { 'Authorization': 'Bearer ' + access_token },
             market:'IN',
-            linit:100,
+            limit:50,
             json: true
           };
           //console.log('kk',bodyof)
           request.get(options, function(error, response, body) {
-            
+            console.log(body.items)
             //console.log('mm',body.items[0].track)
-            var urls = new Array(100);
-            var names=new Array(100)
-            for (var i = 0; i < 100; i++) {
-              if(body.items[i]!=undefined)
+            //var urls = new Array(50);
+            //var names=new Array(50)
+            
+           /* for (var i = 0; i < 50; i++) {
+              if(body.items[i]!=undefined )//&& body.items[i].track.preview_url!=undefined)
                 {urls[i] = body.items[i].track.preview_url
                   names[i]=body.items[i].track.name
                 }
                 
             }
-            var j=Math.floor(Math.random() * 100); ;
-            res.render("views/index.ejs", {name:names[j],url:urls[j]});
-            info.name=names[7];info.url=urls[7]
+            //var j=0;
+            //while(names[j]=='0')*/
+            var j=Math.floor(Math.random() * 50); 
+            console.log(j)
+            //console.log(urls[i])
+            res.render("views/index.ejs", {name:body.items[j].track.name,url:body.items[j].track.preview_url});
+            //info.name=names[7];info.url=urls[7]
             //res.redirect(urls[7])
             //console.log(names[7])
             
@@ -185,7 +190,8 @@ app.get('/refresh_token', function(req, res) {
 });
 
 //console.log('Listening on 8888');
-app.listen(5000);
+const port = process.env.PORT || 3000
+app.listen(port);
 
 
 //module.exports={info}
