@@ -70,7 +70,7 @@ var info={
 }
 
 app.get('/callback', function(req, res) {
-  console.log('kk')
+  //console.log('kk')
   var musicurl;
   // your application requests refresh and access tokens
   // after checking the state parameter
@@ -100,7 +100,7 @@ app.get('/callback', function(req, res) {
     };
 
     request.post(authOptions, function(error, response, body) {
-      console.log(body)
+      //console.log(body)
       if (!error && response.statusCode === 200) {
 
         var access_token = body.access_token,
@@ -128,7 +128,7 @@ app.get('/callback', function(req, res) {
           //console.log('kk',bodyof)
           request.get(options, function(error, response, body) {
             
-            console.log('mm',body.items[0].track)
+            //console.log('mm',body.items[0].track)
             var urls = new Array(100);
             var names=new Array(100)
             for (var i = 0; i < 100; i++) {
@@ -178,7 +178,7 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-console.log('Listening on 8888');
+//console.log('Listening on 8888');
 app.listen(3000);
 
 
