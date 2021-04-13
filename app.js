@@ -182,4 +182,4 @@ console.log('Listening on 8888');
 app.listen(3000);
 
 
-module.exports={info}
+//module.exports={info}
