@@ -7,16 +7,21 @@
 
   <body>
     <div class="container">
-      <div id="next">
+      <div id="mmm">
         <h1>Random songs of Arjit Singh</h1>
-        <a href="/" class="btn btn-primary">Next</a>
+        <a href="/" class="btn btn-primary" id='next'></a>
       </div>
-      <video controls="" autoplay="" name="media" id="song">
+      <audio controls autoplay >
         <source src="<%= url %>" type="audio/mpeg">
-      </video>
+        </audio>
       <h3 id="name"><%=name%></h3>
 
-     
+     <script>
+       fn=1;
+       setInterval(function(){ 
+         document.getElementById('next').click()
+        }, 30000);
+     </script>
 
   </body>
 
