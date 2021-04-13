@@ -15,7 +15,7 @@ var querystring = require('querystring');
 var cookieParser = require('cookie-parser');
 var app = express();
 app.use(express.static(__dirname + '/'));
-app.use(bodyParser.urlencoded({extend:true}));
+//app.use(bodyParser.urlencoded({extend:true}));
 app.engine('html', require('ejs').renderFile);
 app.set("view engine", "ejs");
 
