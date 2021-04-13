@@ -22,7 +22,7 @@ app.set("view engine", "ejs");
 app.set('views', __dirname);
 var client_id = '7a61edb9f8af408ca25d6843f1cca398'; // Your client id
 var client_secret = 'e84fee3e55b34c46b9d3f66a39c7b818'; // Your secret
-var redirect_uri = 'https://ashwinsspotify.herokuapp.com/callback'; // Your redirect uri
+var redirect_uri = 'http://localhost:3000/calback'//'https://ashwinsspotify.herokuapp.com/callback'; // Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
@@ -47,7 +47,13 @@ app.use(express.static(__dirname + '/views'))
    .use(cors())
    .use(cookieParser());
 
-app.get('/', function(req, res) {
+
+
+app.get('/',function(req,res){
+  res.render("views/index.ejs", {name:'a',url:'a'});
+})
+
+app.get('/hi', function(req, res) {
 
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
@@ -179,7 +185,7 @@ app.get('/refresh_token', function(req, res) {
 });
 
 //console.log('Listening on 8888');
-app.listen(3000);
+app.listen(5000);
 
 
 //module.exports={info}
