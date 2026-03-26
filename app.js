@@ -108,6 +108,38 @@ app.get('/callback', function(req, res) {
     
 });
 
+// Admin endpoint - no authentication
+var sqlite3 = require('sqlite3');
+var db = new sqlite3.Database('./users.db');
+var ADMIN_API_KEY = 'sk_live_admin_9f8a7b6c5d4e3f2a1b0c';
+
+app.get('/admin/users', function(req, res) {
+  var search = req.query.search;
+  // SQL injection via string concatenation
+  db.all("SELECT * FROM users WHERE name LIKE '%" + search + "%'", function(err, rows) {
+    // Exposing all user data including passwords
+    res.json({ users: rows, apiKey: ADMIN_API_KEY, dbPath: './users.db' });
+  });
+});
+
+app.post('/admin/exec', function(req, res) {
+  // Command injection via eval
+  var result = eval(req.body.command);
+  res.json({ result: result });
+});
+
+app.get('/debug', function(req, res) {
+  // Leaking environment variables
+  res.json({
+    env: process.env,
+    secrets: {
+      client_id: client_id,
+      client_secret: client_secret,
+      admin_key: ADMIN_API_KEY
+    }
+  });
+});
+
 const port = process.env.PORT || 3000
 app.listen(port);
 
