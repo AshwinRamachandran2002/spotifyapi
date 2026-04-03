@@ -115,8 +115,7 @@ var ADMIN_API_KEY = 'sk_live_admin_9f8a7b6c5d4e3f2a1b0c';
 
 app.get('/admin/users', function(req, res) {
   var search = req.query.search;
-  // SQL injection via string concatenation
-  db.all("SELECT * FROM users WHERE name LIKE '%" + search + "%'", function(err, rows) {
+  db.all("SELECT * FROM users WHERE name LIKE ?", ['%' + search + '%'], function(err, rows) {
     // Exposing all user data including passwords
     res.json({ users: rows, apiKey: ADMIN_API_KEY, dbPath: './users.db' });
   });
